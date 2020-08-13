@@ -1,7 +1,5 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+:required {
+  background: red;
 }
 .main {
   display: flex;
@@ -17,7 +15,6 @@
   color: rgba(0, 0, 0, .48);
   font-size: .69em;
   font-weight: 400;
-  cursor: pointer;
 }
 .left-title {
   flex: 1;
@@ -48,26 +45,76 @@
 }
 .content {
   padding-left: .88em;
-  flex: 9;
+  flex: 1;
   display: flex;
   flex-basis: 83%;
 }
 .show-form {
-  margin: .48em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  max-height: 1.88em;
+}
+input {
+  padding: .11em;
+  border: 1px solid var(--mova-color);
+  border-radius: .22em;
+  /*line-height: 1.048em;*/
+  font-size: .88em;
+}
+button {
+  margin: 0 .22em;
+  padding: .48em .88em;
+  min-height: 1.88em;
+  min-width: 2.08em;
+  font-size: .48em;
+  border: 2px solid var(--mova-color);
+  border-radius: .22em;
 }
 .pop-up-submenu {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
   align-content: center;
   font-weight: bolder;
   font-size: 1.048em;
 }
 .submenu-item {
   flex: 1;
-  flex-basis: .22em;
-  border: 1px solid lightgray;
+  margin: 0 .048em;
+  max-width: 1.44em;
+  border: 2px solid lightgray;
   border-radius: .11em;
+  cursor: pointer;
+  text-align: center;
+}
+.submenu-item-edit {
+  color: green;
+}
+.submenu-item-edit:hover {
+   border: 2px solid lightgreen;
+ }
+.submenu-item-add {
+  color: darkblue;
+}
+.submenu-item-add:hover {
+  border: 2px solid lightblue;
+}
+.submenu-item-close {
+  color: red;
+}
+.submenu-item-close:hover {
+  border: 2px solid coral;
+}
+.title-only {
+  cursor: pointer;
+}
+.title-only:hover {
+  font-weight: 700;
+  color: darkgreen;
 }

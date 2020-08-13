@@ -5,6 +5,10 @@ body {
   box-sizing: border-box;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 :root {
   --back-color: rgba(	255, 255, 255, .25);
   --mova-color: rgb(105, 189, 69);
