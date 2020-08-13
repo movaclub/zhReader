@@ -1,0 +1,50 @@
+
+.main {
+  display: flex;
+}
+.left {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 17%;
+}
+.book-title {
+  flex: 1;
+  color: rgba(0, 0, 0, .48);
+  font-size: .69em;
+  font-weight: 400;
+}
+.left-title {
+  flex: 1;
+  font-size: .69em;
+  color: var(--mova-color);
+  border-bottom: 1px solid rgba(105, 189, 69, .69);
+}
+.left-title-add {
+  flex: 1;
+  margin: .48em;
+  border: 3px double rgba(105, 189, 69, .69);
+  border-radius: .22em;
+  font-size: .48em;
+  text-align: center;
+  color: var(--mova-color);
+  font-weight: 300;
+  cursor: pointer;
+}
+.left-title-add:hover {
+  margin: .48em;
+  border: 3px double rgba(105, 189, 69, .69);
+  border-radius: .22em;
+  font-size: .48em;
+  text-align: center;
+  color: snow;
+  background-color: var(--mova-color);
+  font-weight: 500;
+}
+.content {
+  padding-left: .88em;
+  flex: 9;
+  display: flex;
+  flex-basis: 83%;
+}
+
