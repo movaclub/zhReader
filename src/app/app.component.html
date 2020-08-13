@@ -6,8 +6,18 @@
       <div class="lang_zh left-title">書本</div>
       <div class="ripple lang_cyr left-title-add" (click)="showAddForm()">Добавить</div>
 
-      <ol *ngFor="let buk of (sContainer | async)?.books['books']">
-        <li class="lang_zh book-title">{{buk['yb_title']}}</li>
+      <ol>
+        <li
+          *ngFor="let buk of (sContainer | async)?.books['books']"
+          class="lang_zh book-title" id="{{buk['yb_id']}}" (contextmenu)="rightClickMenu(buk['yb_id'])" title="right-click to view sub-menu">
+          {{buk['yb_title']}}
+          <div class="pop-up-submenu" *ngIf="subMenu===buk['yb_id']">
+            <div class="submenu-item">&#x270E;</div>
+            <div class="submenu-item">&#43;</div>
+            <div class="submenu-item">&#x2716;</div>
+<!--            {{buk['yb_id']}} - {{buk['yb_title']}}-->
+          </div>
+        </li>
       </ol>
 
     </div>

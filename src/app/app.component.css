@@ -1,4 +1,8 @@
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 .main {
   display: flex;
 }
@@ -13,6 +17,7 @@
   color: rgba(0, 0, 0, .48);
   font-size: .69em;
   font-weight: 400;
+  cursor: pointer;
 }
 .left-title {
   flex: 1;
@@ -47,4 +52,22 @@
   display: flex;
   flex-basis: 83%;
 }
-
+.show-form {
+  margin: .48em;
+}
+.pop-up-submenu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  font-weight: bolder;
+  font-size: 1.048em;
+}
+.submenu-item {
+  flex: 1;
+  flex-basis: .22em;
+  border: 1px solid lightgray;
+  border-radius: .11em;
+}

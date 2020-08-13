@@ -10,7 +10,8 @@ import {Container} from '../interfaces/container';
 export class StatesService {
   private baseURL = 'http://localhost:4848/api/';
   private URLs = {
-    books: `${this.baseURL}book/list`
+    books: `${this.baseURL}book/list`,
+    addTitle: `${this.baseURL}book/add`
   };
 
   private sContainer: Container;
@@ -22,6 +23,11 @@ export class StatesService {
 
   getContainer(): Observable<Container>{
     return this.stateContainer.asObservable();
+  }
+
+  addNewTitle(title: string): void {
+    this.http.post(this.URLs.addTitle, {title})
+      .subscribe( () => this.getBooks());
   }
 
   // start UI: state+payload
