@@ -5,9 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {StatesService} from './services/states.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
-import {ngfModule} from 'angular-file';
-
+import {UploadService} from './services/upload.service';
 import { BooksComponent } from './views/books.component';
 import { ChaptersComponent } from './views/chapters.component';
 
@@ -21,10 +19,9 @@ import { ChaptersComponent } from './views/chapters.component';
     HttpClientModule,
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
-    ngfModule
+    ReactiveFormsModule
   ],
-  providers: [StatesService],
+  providers: [StatesService, UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

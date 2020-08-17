@@ -11,42 +11,44 @@
 
   </div>
   <div class="content">
-<div class="show-form" *ngIf="chapterUI.addChapterFrom">
-  <input
-    ngf
-    type      = "file"
-    accept    = "text/plain"
-    [(file)] = "file"
-  />
-  <input type="hidden" [formControl]="'bookID'" name="bookID" value="{{sContainer.book.yb_id}}">
-  <input type="text" [formControl]="'title'" name="title" value="{{sContainer.book.yb_title}}">
-  <button
-    class="submenu-item-edit"
-    *ngIf="file" (click)="uploadFiles(file)">
-    ✔</button>
+    <div class="show-form" *ngIf="chapterUI.addChapterFrom">
+      <form [formGroup]="myForm" (ngSubmit)="submit()">
 
-<!--  <ngfFormData-->
-<!--    [files]      = "file"-->
-<!--    [(FormData)] = "myFormData"-->
-<!--    postName     = "uploaded"-->
-<!--  ></ngfFormData>-->
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            formControlName="title"
+            id="title"
+            type="text"
+            class="form-control">
+          <div *ngIf="f.title.touched && f.title.invalid" class="alert alert-danger">
+            <div *ngIf="f.title.errors.required">Name is required.</div>
+            <div *ngIf="f.title.errors.minlength">Name should be 3 character.</div>
+          </div>
+        </div>
 
-<!--  <ngfUploadStatus-->
-<!--    [(percent)] = "uploadPercent"-->
-<!--    [httpEvent] = "httpEvent"-->
-<!--  ></ngfUploadStatus>-->
+        <div class="form-group">
+          <label for="file">File</label>
+          <input
+            accept="text/plain"
+            formControlName="file"
+            id="file"
+            type="file"
+            class="form-control"
+            (change)="onFileChange($event)">
+          <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+            <div *ngIf="f.file.errors.required">File is required.</div>
+          </div>
+          <button type="submit" class="submenu-item-edit">✔</button>
+        </div>
 
-<!--  <div *ngIf="uploadPercent">-->
-<!--    Загрузка: {{ uploadPercent }}%-->
-<!--  </div>-->
-<!--  <input [formControl]="curTitle" name="curTitle"/>-->
-<!--  <button class="submenu-item-edit" (click)="updateTitle()">✔</button>-->
-<!--  <button class="submenu-item-close" (click)="cancelEditTitle()">✖</button>  -->
-</div>
-<div class="show-list" *ngIf="chapterUI.chapterLIst">
-  chapter list
-</div>
+<!--        <button class="btn btn-primary" type="submit">Submit</button>-->
+      </form>
 
+    </div>
+    <div class="show-list" *ngIf="chapterUI.chapterLIst">
+      chapter list
+    </div>
 
   </div>
 </div>

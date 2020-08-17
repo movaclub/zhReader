@@ -1,15 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HttpClient, HttpEvent, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Subscription, Unsubscribable} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Unsubscribable} from 'rxjs';
 import {Container} from '../interfaces/container';
 import {StatesService} from '../services/states.service';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'zh-reader-chapters',
   templateUrl: './chapters.component.html',
   styleUrls: ['./chapters.component.css']
 })
-export class ChaptersComponent implements OnInit, OnDestroy {
+export class ChaptersComponent implements OnInit {
 
   // general
   public sContainer: Container;
@@ -19,45 +20,61 @@ export class ChaptersComponent implements OnInit, OnDestroy {
   private svcUnsubsc: Unsubscribable;
   public myFormData: FormData;
   private postUrl = 'http://localhost:4848/api/upl';
-  public httpEvent: HttpEvent<{}>;
-  public file: File;
-  public uploadPercent = 0;
+  public myForm = new FormGroup({
+    title: new FormControl('造句法'),
+    bookID: new FormControl(''),
+    file: new FormControl('',
+      [Validators.required]),
+    fileSource: new FormControl('',
+      [Validators.required])
+  });
 
-  constructor(private httpClient: HttpClient,
+  constructor(private http: HttpClient,
               private stateSvc: StatesService) {
     this.chapterUI = {addChapterFrom: false, chapterLIst: true};
   }
 
-  ngOnDestroy(): void {
-    this.svcUnsubsc.unsubscribe();
+  get f(): { [p: string]: AbstractControl } {
+    return this.myForm.controls;
+  }
+
+  onFileChange(event): void {
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+
+      this.myForm.patchValue({
+        fileSource: file
+      });
+    }
+    // console.log('onFileChange: ', this.myForm);
+  }
+
+  submit(): void {
+    const formData = new FormData();
+    formData.append('bookID', this.sContainer.book.yb_id.toString());
+    formData.append('title', this.myForm.get('title').value);
+    formData.append('file', this.myForm.get('fileSource').value);
+    console.log('FORMdata: ', formData);
+    this.http.post(this.postUrl, formData)
+      .subscribe(res => {
+        console.log(res);
+        alert('Uploaded Successfully.');
+      });
   }
 
   ngOnInit(): void {
     this.svcUnsubsc = this.stateSvc.getContainer()
-      .subscribe(datum => this.sContainer = datum);
+      .subscribe(datum => {
+        this.sContainer = datum;
+      });
   }
 
   showAddChapterForm(): void {
     this.chapterUI.addChapterFrom = !this.chapterUI.addChapterFrom;
-    this.chapterUI.addChapterFrom ? this.chapterUI.chapterLIst = false : this.chapterUI.chapterLIst = true;
+    this.chapterUI.addChapterFrom ?
+      this.chapterUI.chapterLIst = false :
+      this.chapterUI.chapterLIst = true;
   }
 
-  uploadFiles(file: File): Subscription {
-    console.log('myFormData: ', this.myFormData);
-    const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
-      reportProgress: true
-    });
-
-    return this.httpClient.request(config)
-      .subscribe(event => {
-          this.httpEvent = event;
-
-          if (event instanceof HttpResponse) {
-            alert('upload complete, old school alert used');
-          }
-        },
-        error => {
-          alert('!failure beyond compare cause:' + error.toString());
-        });
-  }
 }
