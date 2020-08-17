@@ -6,15 +6,23 @@ import {AppComponent} from './app.component';
 import {StatesService} from './services/states.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
+import {ngfModule} from 'angular-file';
+
+import { BooksComponent } from './views/books.component';
+import { ChaptersComponent } from './views/chapters.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BooksComponent,
+    ChaptersComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ngfModule
   ],
   providers: [StatesService],
   bootstrap: [AppComponent]

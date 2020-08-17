@@ -1,0 +1,52 @@
+<div class="main">
+  <div class="left">
+
+    <div class="lang_zh left-title">
+      書本
+      <span class="cur-book-title">{{sContainer.book.yb_title}}</span>
+    </div>
+    <div class="ripple lang_cyr left-title-add" (click)="showAddChapterForm()">
+      &#43; Глава
+    </div>
+
+  </div>
+  <div class="content">
+<div class="show-form" *ngIf="chapterUI.addChapterFrom">
+  <input
+    ngf
+    type      = "file"
+    accept    = "text/plain"
+    [(file)] = "file"
+  />
+  <input type="hidden" [formControl]="'bookID'" name="bookID" value="{{sContainer.book.yb_id}}">
+  <input type="text" [formControl]="'title'" name="title" value="{{sContainer.book.yb_title}}">
+  <button
+    class="submenu-item-edit"
+    *ngIf="file" (click)="uploadFiles(file)">
+    ✔</button>
+
+<!--  <ngfFormData-->
+<!--    [files]      = "file"-->
+<!--    [(FormData)] = "myFormData"-->
+<!--    postName     = "uploaded"-->
+<!--  ></ngfFormData>-->
+
+<!--  <ngfUploadStatus-->
+<!--    [(percent)] = "uploadPercent"-->
+<!--    [httpEvent] = "httpEvent"-->
+<!--  ></ngfUploadStatus>-->
+
+<!--  <div *ngIf="uploadPercent">-->
+<!--    Загрузка: {{ uploadPercent }}%-->
+<!--  </div>-->
+<!--  <input [formControl]="curTitle" name="curTitle"/>-->
+<!--  <button class="submenu-item-edit" (click)="updateTitle()">✔</button>-->
+<!--  <button class="submenu-item-close" (click)="cancelEditTitle()">✖</button>  -->
+</div>
+<div class="show-list" *ngIf="chapterUI.chapterLIst">
+  chapter list
+</div>
+
+
+  </div>
+</div>

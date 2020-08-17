@@ -1,4 +1,4 @@
 export interface Book {
-  yp_id: number;
-  yp_title: string;
+  yb_id: number;
+  yb_title: string;
 }

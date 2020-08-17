@@ -1,0 +1,41 @@
+<div class="main">
+  <div class="left">
+
+    <div class="lang_zh left-title">書本</div>
+    <div class="ripple lang_cyr left-title-add" (click)="showAddForm()">Добавить</div>
+
+    <ol class="lang_en">
+      <li
+        *ngFor="let buk of (sContainer | async)?.books['books']"
+        class="lang_zh book-title" id="{{buk['yb_id']}}" (contextmenu)="rightClickMenu(buk['yb_id'])"
+        title="right-click to view sub-menu">
+        <span class="title-only" (click)="showBook(buk)">{{buk['yb_title']}}</span>
+        <div class="pop-up-submenu" *ngIf="subMenu===buk['yb_id']">
+          <div
+            (click)="editBookTitle(buk)"
+            class="submenu-item submenu-item-edit"
+            title="edit title">&#x270E;
+          </div>
+<!--          <div class="submenu-item submenu-item-add" title="add text">&#43;</div>-->
+          <div class="submenu-item submenu-item-close" title="close sub-menu" (click)="subMenu=0">&#x2716;</div>
+        </div>
+      </li>
+    </ol>
+
+  </div>
+  <div class="content">
+
+    <div class="show-form" *ngIf="bookUI.editTitleForm===true">
+      <input [formControl]="curTitle" name="curTitle"/>
+      <button class="submenu-item-edit" (click)="updateTitle()">✔</button>
+      <button class="submenu-item-close" (click)="cancelEditTitle()">✖</button>
+    </div>
+
+    <div class="show-form" *ngIf="bookUI.addTitleForm===true">
+      <input placeholder="新書" [formControl]="newTitle" name="newTitle"/>
+      <button class="submenu-item-edit" [disabled]="!newTitle.value.length" (click)="addNewTitle()">✔</button>
+      <button class="submenu-item-close" (click)="cancelNewTitle()">✖</button>
+    </div>
+
+  </div>
+</div>
