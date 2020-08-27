@@ -128,6 +128,7 @@ button:hover {
   font-size: .69em;
   color: var(--mova-color);
   border-bottom: 1px solid rgba(105, 189, 69, .69);
+  cursor: pointer;
 }
 .left-title-add {
   flex: 1;
@@ -227,14 +228,16 @@ button {
   display: flex;
 }
 .left {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex-basis: 17%;
+  flex-basis: 18%;
 }
 .content {
   padding-left: .88em;
   flex: 1;
   display: flex;
-  flex-basis: 83%;
+  flex-basis: 82%;
 }
+
 /* chapters */

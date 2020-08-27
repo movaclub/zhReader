@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Unsubscribable} from 'rxjs';
+import {Observable, Unsubscribable} from 'rxjs';
 import {Container} from '../interfaces/container';
 import {StatesService} from '../services/states.service';
+import {UploadService} from '../services/upload.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Chapters} from '../interfaces/chapters';
 
 @Component({
   selector: 'zh-reader-chapters',
@@ -13,13 +14,15 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 export class ChaptersComponent implements OnInit {
 
   // general
-  public sContainer: Container;
+  public sContainer: Container; // for our reactive form
+  public container: Observable<Container>; // for our UI
 
   // chapter UI
   public chapterUI: { addChapterFrom: boolean; chapterLIst: boolean; };
   private svcUnsubsc: Unsubscribable;
-  public myFormData: FormData;
-  private postUrl = 'http://localhost:4848/api/upl';
+  public chapterList: Observable<Chapters>;
+  // public myFormData: FormData;
+
   public myForm = new FormGroup({
     title: new FormControl('造句法'),
     bookID: new FormControl(''),
@@ -29,7 +32,7 @@ export class ChaptersComponent implements OnInit {
       [Validators.required])
   });
 
-  constructor(private http: HttpClient,
+  constructor(private uploadService: UploadService,
               private stateSvc: StatesService) {
     this.chapterUI = {addChapterFrom: false, chapterLIst: true};
   }
@@ -39,15 +42,12 @@ export class ChaptersComponent implements OnInit {
   }
 
   onFileChange(event): void {
-
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-
       this.myForm.patchValue({
         fileSource: file
       });
     }
-    // console.log('onFileChange: ', this.myForm);
   }
 
   submit(): void {
@@ -56,14 +56,18 @@ export class ChaptersComponent implements OnInit {
     formData.append('title', this.myForm.get('title').value);
     formData.append('file', this.myForm.get('fileSource').value);
     console.log('FORMdata: ', formData);
-    this.http.post(this.postUrl, formData)
-      .subscribe(res => {
-        console.log(res);
-        alert('Uploaded Successfully.');
-      });
+    this.chapterUI = {addChapterFrom: false, chapterLIst: true};
+    this.uploadService.upload(formData);
+    // this.http.post(this.postUrl, formData)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //     this.chapterUI = {addChapterFrom: false, chapterLIst: true};
+    //     // alert('Uploaded Successfully.');
+    //   });
   }
 
   ngOnInit(): void {
+    this.container = this.stateSvc.getContainer();
     this.svcUnsubsc = this.stateSvc.getContainer()
       .subscribe(datum => {
         this.sContainer = datum;
@@ -75,6 +79,14 @@ export class ChaptersComponent implements OnInit {
     this.chapterUI.addChapterFrom ?
       this.chapterUI.chapterLIst = false :
       this.chapterUI.chapterLIst = true;
+  }
+
+  showBookList(): void {
+    // this.stateSvc.getBooks();
+  }
+
+  cancelAddNewChapter(): void {
+    this.chapterUI = {addChapterFrom: false, chapterLIst: true};
   }
 
 }

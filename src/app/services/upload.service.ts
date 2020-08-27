@@ -1,24 +1,19 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Chapter} from '../interfaces/chapter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  // private srvURL = 'http://localhost:4848/api/upl';
+  private postUrl = 'http://localhost:4848';
 
-
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
-
-
-
-
-  // upload(formData: FormData): Observable<HttpEvent<Response>> {
-  //   return this.httpClient.post<Response>(this.srvURL, formData, {
-  //     reportProgress: true,
-  //     observe: 'events'
-  //   });
-  // }
+  upload(formData: any): void {
+    this.http.post<Chapter[]>(`${this.postUrl}/api/upl`, formData)
+      .subscribe( res => console.log('upload-res: ', res));
+  }
 
 }

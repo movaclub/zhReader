@@ -3,3 +3,29 @@
   font-weight: 400;
   color: darkgreen;
 }
+
+.show-form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  max-height: 1.88em;
+  font-size: .88em;
+}
+
+label {
+  font-size: .88em;
+}
+
+.alert {
+  font-size: .69em;
+  color: red;
+}
+
+.chapter-title {
+  font-size: .69em;
+  font-weight: 300;
+  color: darkgreen;
+}

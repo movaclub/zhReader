@@ -1,9 +1,9 @@
 <div class="main">
   <div class="left">
 
-    <div class="lang_zh left-title">
+    <div class="lang_zh left-title" (click)="showBookList()">
       書本
-      <span class="cur-book-title">{{sContainer.book.yb_title}}</span>
+      <span class="cur-book-title">{{(container | async)?.book.yb_title}}</span>
     </div>
     <div class="ripple lang_cyr left-title-add" (click)="showAddChapterForm()">
       &#43; Глава
@@ -15,20 +15,20 @@
       <form [formGroup]="myForm" (ngSubmit)="submit()">
 
         <div class="form-group">
-          <label for="title">Title</label>
+          <label for="title">Заголовок </label>
           <input
             formControlName="title"
             id="title"
             type="text"
             class="form-control">
-          <div *ngIf="f.title.touched && f.title.invalid" class="alert alert-danger">
-            <div *ngIf="f.title.errors.required">Name is required.</div>
-            <div *ngIf="f.title.errors.minlength">Name should be 3 character.</div>
+          <div *ngIf="f.title.touched && f.title.invalid" class="alert">
+            <span *ngIf="f.title.errors.required">Name is required.</span>
+            <span *ngIf="f.title.errors.minlength">Name should be 3 character.</span>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="file">File</label>
+        <div class="form-group lang_cyr">
+          <label for="file">Файл </label>
           <input
             accept="text/plain"
             formControlName="file"
@@ -36,18 +36,21 @@
             type="file"
             class="form-control"
             (change)="onFileChange($event)">
-          <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
-            <div *ngIf="f.file.errors.required">File is required.</div>
+          <!--          <div *ngIf="(f.file.invalid && f.file.touched) || (f.file.invalid && f.file.dirty)" class="alert">-->
+          <div *ngIf="f.file?.invalid && f.file?.dirty && f.file?.touched" class="alert">
+            <div *ngIf="f.file.errors?.required">File is required.</div>
           </div>
-          <button type="submit" class="submenu-item-edit">✔</button>
+          <button [disabled]="!myForm.valid" type="submit" class="submenu-item-edit">✔</button>
+          <button class="submenu-item-close" (click)="cancelAddNewChapter()">✖</button>
         </div>
-
-<!--        <button class="btn btn-primary" type="submit">Submit</button>-->
       </form>
 
     </div>
-    <div class="show-list" *ngIf="chapterUI.chapterLIst">
-      chapter list
+
+    <div *ngIf="chapterUI.chapterLIst">
+      <div class="chapter-title lang_zh" *ngFor="let chap of (container | async)?.chaps; let i = index;">
+        {{i + 1}}. {{chap.yt_title}}
+      </div>
     </div>
 
   </div>

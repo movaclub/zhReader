@@ -6,8 +6,8 @@ import {AppComponent} from './app.component';
 import {StatesService} from './services/states.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UploadService} from './services/upload.service';
-import { BooksComponent } from './views/books.component';
-import { ChaptersComponent } from './views/chapters.component';
+import {BooksComponent} from './views/books.component';
+import {ChaptersComponent} from './views/chapters.component';
 
 @NgModule({
   declarations: [

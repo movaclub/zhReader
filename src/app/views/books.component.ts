@@ -15,7 +15,7 @@ export class BooksComponent implements OnInit {
 
   // general
   public sContainer: Observable<Container>;
-  private container: Container;
+  // private container: Container;
 
   // book UI
   public bookUI: {addTitleForm: boolean; editTitleForm: boolean};
